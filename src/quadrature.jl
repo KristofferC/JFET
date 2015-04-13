@@ -79,7 +79,7 @@ function make_quadrule(ref::ReferenceTetrahedron, order::Int)
     p1, w1 = gaussjacobi(order, 0.0, 0.0)
     p2, w2 = gaussjacobi(order, 1.0, 0.0)
     p3, w3 = gaussjacobi(order, 2.0, 0.0)
-
+    error("Bugged!")
     function affine(a, b, c)
        a = (a+1) / 2
        b = (b+1) / 2
