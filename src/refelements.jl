@@ -18,6 +18,18 @@ dim(::AbstractReferenceElement_2D) = 2
 dim(::AbstractReferenceElement_3D) = 3
 
 
+# TODO this can fail for entity(refline, 3) for example
+function entity(refele::AbstractReferenceElement, dim::Int)
+    if dim == 1
+        return refele.edges
+    elseif dim == 2
+        return refele.faces
+    elseif dim == 3
+        return refele.cell
+    end
+end
+
+
 immutable ReferenceLine <: AbstractReferenceElement_1D
     vertices::Vector{Vector{Float64}}
     edges::Vector{Vector{Int}}
@@ -33,7 +45,7 @@ function ReferenceLine()
     ReferenceLine(vertices, edges)
 end
 volume(::ReferenceLine) = 2.0
-lattice(::ReferenceLine, order::Int) = linspace(0,1, order)
+
 
 immutable ReferenceTriangle <: AbstractReferenceElement_2D
     vertices::Vector{Vector{Float64}}

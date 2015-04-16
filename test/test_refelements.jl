@@ -14,7 +14,14 @@ ref_cube = ReferenceCube()
 @test dim(ref_cube) == 3
 
 
-for p = 1:5, ref_shape = [ref_line, ref_triangle, ref_square, ref_tetrahedron, ref_cube]
-    qr = make_quadrule(ref_shape, p)
-    @test_approx_eq integrate(qr, x -> 1) volume(ref_shape)
+for p = 2:5
+    qr = make_quadrule(ref_line, p)
+    for n = [2*p - 1, 2*p - 2]
+        analytic = 1 / (n+1) * (1. + (-1.)^n)
+        @test_approx_eq integrate(qr, x -> x[1]^n) analytic
+    end
+
+    # http://www.m-hikari.com/ijma/ijma-2011/ijma-1-4-2011/venkateshIJMA1-4-2011.pdf
 end
+
+
